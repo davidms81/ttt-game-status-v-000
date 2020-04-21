@@ -14,3 +14,6 @@ WIN_COMBINATIONS = [
   [0,4,8], # Diagonal top left to bottom right
   [2,4,6], # Diagonal top right to bottom left
 ]
+
+def won?
+end
