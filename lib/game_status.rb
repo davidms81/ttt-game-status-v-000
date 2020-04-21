@@ -12,52 +12,33 @@ WIN_COMBINATIONS = [
   [1,4,7],
   [2,5,8],
   [0,4,8],
-  [2,4,6]
+  [6,4,2]
 ]
 
 def won?(board)
-  WIN_COMBINATIONS.each do |win_combination|
-    win_index_1 = win_combination[0]
-    win_index_2 = win_combination[1]
-    win_index_3 = win_combination[2]
-    position_1 = board[win_index_1] # load the value of the board at win_index_1
-    position_2 = board[win_index_2] # load the value of the board at win_index_2
-    position_3 = board[win_index_3] # load the value of the board at win_index_3
-    if position_1 == "X" && position_2 == "X" && position_3 == "X" || position_1 == "O" && position_2 == "O" && position_3 == "O"
-    return win_combination # return the win_combination indexes that won.
+  WIN_COMBINATIONS.detect do |combo|
+    board[combo[0]] == board[combo[1]] &&
+    board[combo[1]] == board[combo[2]] &&
+    position_taken?(board, combo[0])
   end
-end
-  else
-    false
 end
 
 def full?(board)
-  board.all? do |space|
-    space == "X" || space == "O"
+  board.all? do |position|
+    position == "X" || position == "O"
   end
 end
 
 def draw?(board)
-  if full?(board) && !won?(board)
-  return true
-else
-  false
-end
+  full?(board) && !won?(board)
 end
 
 def over?(board)
-  if won?(board) || draw?(board) || full?(board)
-    return true
-  end
+  won?(board) || draw?(board) || full?(board)
 end
 
 def winner(board)
-  winning_token = won?(board)
- if winning_token == false
- return nil
- elsif board[winning_token[0]] == "X"
-   return "X"
- elsif board[winning_token[0]] == "O"
-   return "O"
-end
+  if token = won?(board)
+    board[token[0]]
+  end
 end
